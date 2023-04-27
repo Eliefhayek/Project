@@ -29,12 +29,18 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            "image_name"=>"required",
-            "title"=>"required"|"unique:banners",
-            "sub_title"=>"required"
+       $validatedata= $request->validate([
+            'image_name'=>'required',
+            'title'=>'required',
+            'sub_title'=>'required'
         ]);
+        $banner=new Banners();
+        $banner->image_name= $validatedata['image_name'];
+        $banner->title=$validatedata['title'];
+        $banner->sub_title=$validatedata['sub_title'];
+        $banner->save();
 
+        return response()->json(['message'=>'Banner added succesfully'],201);
     }
 
     /**
