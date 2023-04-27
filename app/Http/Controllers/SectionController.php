@@ -29,6 +29,20 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         //
+        $validatedata= $request->validate([
+            'image_name'=>'required',
+            'title'=>'required',
+            'sub_title'=>'required',
+            'information'=>'required'
+        ]);
+        $section=new Section();
+        $section->image_name= $validatedata['image_name'];
+        $section->sub_title= $validatedata['sub_title'];
+        $section->title= $validatedata['title'];
+        $section->information=$validatedata['information'];
+        $section->save();
+
+        return response()->json(['message'=>'Section added succesfully'],201);
     }
 
     /**
