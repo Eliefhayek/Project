@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\questionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ServiceController;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::middleware('loginauth')->group(function(){
 Route::post('/banner',[BannerController::class,'store']);
 Route::get('/banner',[BannerController::class,'index']);
 Route::get('/banner/{id}',[BannerController::class,'show']);
@@ -51,4 +53,7 @@ Route::get('/question',[questionController::class,'index']);
 Route::get('/question/{id}',[questionController::class,'show']);
 Route::delete('/question/{id}',[questionController::class,'destroy']);
 Route::put('/question/{id}',[questionController::class,'update']);
+});
+Route::post('/signup',[LoginController::class,'Signup']);
+Route::post('/login',[LoginController::class,'Login']);
 
