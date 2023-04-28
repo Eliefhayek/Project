@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Section;
+use App\Models\categories;
 use Illuminate\Http\Request;
 
-class SectionController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,8 @@ class SectionController extends Controller
     public function index()
     {
         //
-        $sec=Section::all();
-        return response()->json($sec);
+        $cat=categories::all();
+        return response()->json($cat);
     }
 
     /**
@@ -30,21 +30,15 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $validatedata= $request->validate([
-            'image_name'=>'required',
-            'title'=>'required',
-            'sub_title'=>'required',
-            'information'=>'required'
-        ]);
-        $section=new Section();
-        $section->image_name= $validatedata['image_name'];
-        $section->sub_title= $validatedata['sub_title'];
-        $section->title= $validatedata['title'];
-        $section->information=$validatedata['information'];
-        $section->save();
 
-        return response()->json(['message'=>'Section added succesfully'],201);
+
+        $validatedata= $request->validate([
+            'Title'=>'required'
+        ]);
+        $categorie=new categories();
+        $categorie->Title=$validatedata['Title'];
+        $categorie->save();
+        return response()->json(['message'=>'category added succesfully'],201);
     }
 
     /**
@@ -53,17 +47,17 @@ class SectionController extends Controller
     public function show($id)
     {
         //
-        $sect=Section::find($id);
-        if(!$sect){
+        $cat=categories::find($id);
+        if(!$cat){
             return response()->json("id does not exist",404);
         }
-        return response()->json($sect);
+        return response()->json($cat);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Section $section)
+    public function edit(categories $categories)
     {
         //
     }
@@ -74,12 +68,12 @@ class SectionController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $sect=Section::find($id);
-        if(!$sect){
+        $cat=categories::find($id);
+        if(!$cat){
             return response()->json("id does not exist",404);
         }
-        $sect->update($request->all());
-        return response()->json($sect);
+        $cat->update($request->all());
+        return response()->json($cat);
     }
 
     /**
@@ -88,12 +82,12 @@ class SectionController extends Controller
     public function destroy($id)
     {
         //
-        $sect=Section::find($id);
-        if(!$sect){
+        $cat=categories::find($id);
+        if(!$cat){
             return response()->json("id does not exist",404);
         }
-        $sect->delete();
-        return response()->json("successfully deleted");
+        $cat->delete();
+        return response()->json('successfully deleted');
 
     }
 }

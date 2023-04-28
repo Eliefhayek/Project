@@ -13,6 +13,8 @@ class ServiceController extends Controller
     public function index()
     {
         //
+        $serv=Services::all();
+        return response()->json($serv);
     }
 
     /**
@@ -44,9 +46,14 @@ class ServiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Services $services)
+    public function show($id)
     {
         //
+        $serv=Services::find($id);
+        if(!$serv){
+            return response()->json("id does not exist",404);
+        }
+        return response()->json($serv);
     }
 
     /**
@@ -60,16 +67,28 @@ class ServiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Services $services)
+    public function update(Request $request, $id)
     {
         //
+        $serv=Services::find($id);
+        if(!$serv){
+            return response()->json("id does not exist",404);
+        }
+        $serv->update($request->all());
+        return response()->json($serv);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Services $services)
+    public function destroy($id)
     {
         //
+        $serv=Services::find($id);
+        if(!$serv){
+            return response()->json("id does not exist",404);
+        }
+        $serv->delete();
+        return response()->json('successfully deleted');
     }
 }

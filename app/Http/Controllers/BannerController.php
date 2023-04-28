@@ -13,6 +13,8 @@ class BannerController extends Controller
     public function index()
     {
         //
+       $ban=Banners::all();
+       return response()->json($ban);
     }
 
     /**
@@ -46,9 +48,14 @@ class BannerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Banners $banners)
+    public function show($id)
     {
         //
+        $ban=Banners::find($id);
+        if(!$ban){
+            return response()->json("id does not exist",404);
+        }
+        return response()->json($ban);
     }
 
     /**
@@ -62,16 +69,28 @@ class BannerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Banners $banners)
+    public function update(Request $request, $id)
     {
         //
+        $ban=Banners::find($id);
+        if(!$ban){
+            return response()->json("id does not exist",404);
+        }
+        $ban->update($request->all());
+        return response()->json($ban);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Banners $banners)
+    public function destroy($id)
     {
         //
+        $ban=Banners::find($id);
+        if(!$ban){
+            return response()->json("id does not exist",404);
+        }
+        $ban->delete();
+        return response()->json("successfully deleted");
     }
 }

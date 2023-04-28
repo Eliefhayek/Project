@@ -11,4 +11,7 @@ class categories extends Model
     public function questions(){
        return $this->belongsToMany(questions::class);
     }
+    protected $fillable = [
+        'Title'
+    ];
 }

@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Services extends Model
+class cat_question extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'Title',
-        'information'
-
-    ];
 }
