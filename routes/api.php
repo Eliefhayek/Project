@@ -54,6 +54,7 @@ Route::get('/question/{id}',[questionController::class,'show']);
 Route::delete('/question/{id}',[questionController::class,'destroy']);
 Route::put('/question/{id}',[questionController::class,'update']);
 });
+# when trying to run an api.php we have to take the api token and place in a header named Autharization
 Route::post('/signup',[LoginController::class,'Signup']);
 Route::post('/login',[LoginController::class,'Login']);
 
