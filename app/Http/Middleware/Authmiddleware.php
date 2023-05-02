@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Authmiddleware
 {
@@ -14,10 +15,12 @@ class Authmiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if(!Auth::check()){
-            return response()->json('user is not authentecated',401);
+        $token = $request->header('Authorization');
+        if(!Auth::guard('api')->check()){
+
+            return response()->json("not logged in",401);
         }
         return $next($request);
     }

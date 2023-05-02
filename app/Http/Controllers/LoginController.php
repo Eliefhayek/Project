@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+
 class LoginController extends Controller
 {
     public function Login(Request $request){
@@ -14,14 +15,19 @@ class LoginController extends Controller
             'email'=>'required|email',
             'password'=>'required'
         ]);
-        $email=$validedata['email'];
-        $password=$validedata['password'];
-        $user=User::where('email','=',$email)->first();
-        if($user && Hash::check($password,$user->password)){
-            Auth::login($user);
-            return response()->json('successfully loggedIn');
+        $user = User::where('email', $request->email)->first();
+        $credentials=$request->only('email','password');
+        if(Auth::attempt($credentials)){
+            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+            return response()->json([
+                'status_code' => 200,
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+              ]);
         }
-        return response()->json($user);
+        else{
+            return response()->json('no good');
+        }
     }
     public function Signup(Request $request){
 
