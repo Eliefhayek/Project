@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -18,5 +19,16 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $adminRole = Role::create(['name' => 'admin']);
+        $editorRole = Role::create(['name' => 'editor']);
+
+        $updatePermission = Permission::create(['name' => 'update user']);
+        $deletePermission = Permission::create(['name' => 'delete user']);
+        $editPermission = Permission::create(['name' => 'edit user']);
+
+        $adminRole->syncPermissions([$updatePermission->id, $deletePermission->id, $editPermission->id]);
+        $editorRole->syncPermissions([$updatePermission->id]);
+
+
     }
 }
