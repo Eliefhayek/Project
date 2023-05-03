@@ -7,7 +7,9 @@ use App\Http\Controllers\questionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,35 +26,44 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::middleware('loginauth')->group(function(){
+
 Route::post('/banner',[BannerController::class,'store']);
 Route::get('/banner',[BannerController::class,'index']);
 Route::get('/banner/{id}',[BannerController::class,'show']);
 Route::delete('/banner/{id}',[BannerController::class,'destroy']);
-Route::put('/banner/{id}',[BannerController::class,'update']);
+
 
 Route::post('/section',[SectionController::class,'store']);
 Route::get('/section',[SectionController::class,'index']);
 Route::get('/section/{id}',[SectionController::class,'show']);
 Route::delete('/section/{id}',[SectionController::class,'destroy']);
-Route::put('/section/{id}',[SectionController::class,'update']);
+
 
 Route::post('/service',[ServiceController::class,'store']);
 Route::get('/service',[ServiceController::class,'index']);
 Route::get('/service/{id}',[ServiceController::class,'show']);
 Route::delete('/service/{id}',[ServiceController::class,'destroy']);
-Route::put('/service/{id}',[ServiceController::class,'update']);
+
 
 Route::post('/cat',[CategoryController::class,'store']);
 Route::get('/cat',[CategoryController::class,'index']);
 Route::get('/cat/{id}',[CategoryController::class,'show']);
 Route::delete('/cat/{id}',[CategoryController::class,'destroy']);
-Route::put('/cat/{id}',[CategoryController::class,'update']);
+
 
 Route::post('/question',[questionController::class,'store']);
 Route::get('/question',[questionController::class,'index']);
 Route::get('/question/{id}',[questionController::class,'show']);
 Route::delete('/question/{id}',[questionController::class,'destroy']);
-Route::put('/question/{id}',[questionController::class,'update']);
+
+
+});
+Route::middleware('editorauth')->group(function(){
+    Route::put('/question/{id}',[questionController::class,'update']);
+    Route::put('/cat/{id}',[CategoryController::class,'update']);
+    Route::put('/service/{id}',[ServiceController::class,'update']);
+    Route::put('/section/{id}',[SectionController::class,'update']);
+    Route::put('/banner/{id}',[BannerController::class,'update']);
 });
 # when trying to run an api.php we have to take the api token and place in a header named Autharization
 Route::post('/signup',[LoginController::class,'Signup']);

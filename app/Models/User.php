@@ -8,11 +8,14 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens as  passportAPI;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Traits\HasPermissions;
 
 class User extends Model implements AuthenticatableContract
 {
     use Authenticatable;
     use HasFactory,Notifiable,passportAPI;
+    use HasRoles,HasPermissions;
     protected $fillable=[
         'email',
         'password',

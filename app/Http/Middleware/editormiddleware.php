@@ -4,12 +4,11 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
-class Authmiddleware
+class editormiddleware
 {
     /**
      * Handle an incoming request.
@@ -25,13 +24,11 @@ class Authmiddleware
         }
         $user=Auth::guard('api')->user();
         $use=User::find($user->id);
-if($use->hasRole('admin')){
+if($use->hasAnyRole(['admin', 'editor'])){
     return $next($request);
 }
 else{
     return response()->json('unautherized access',401);
 }
-
-
     }
 }

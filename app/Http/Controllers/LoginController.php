@@ -35,12 +35,23 @@ class LoginController extends Controller
             'email'=>'required|unique:users,email|email',
             'password'=>'required'
         ]);
-        $user=new User();
+      /*  $user=new User();
         $user->email=$validedata['email'];
         $user->password=Hash::make($validedata['password']);
         $user->is_authenticated=false;
-        $user->save();
-
+        $user->save();*/
+        $admin=User::create([
+            'email' => 'admin@example.com',
+            'password' => Hash::make($validedata['password']),
+            'is_authenticated'=>false
+        ]);
+        $admin->assignRole('admin');
+        $editor = User::create([
+            'email' => 'editor@example.com',
+            'password' => Hash::make('password'),
+            'is_authenticated'=>false
+        ]);
+        $editor->assignRole('editor');
         return response()->json("successfull signup");
     }
     //
