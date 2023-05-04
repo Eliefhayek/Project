@@ -59,7 +59,8 @@ class LoginController extends Controller
     public function displayUser(){
        # return response()->json('Users',200);
         $users=QueryBuilder::for(User::class)
-        ->allowedSorts('id')
+        ->defaultSort('email')
+        ->allowedSorts('email')
         ->whereBetween('created_at', [Carbon::now()->subDays(30), Carbon::now()])
         ->get();
         return response()->json(['Users'=>$users],200);
