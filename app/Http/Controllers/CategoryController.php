@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\categories;
 use Illuminate\Http\Request;
-
+use Spatie\QueryBuilder\QueryBuilder;
 class CategoryController extends Controller
 {
     /**
@@ -47,7 +47,9 @@ class CategoryController extends Controller
     public function show($id)
     {
         //
-        $cat=categories::find($id);
+        $cat = QueryBuilder::for(categories::class)
+        ->allowedFields(['id', 'Title'])
+        ->get();
         if(!$cat){
             return response()->json("id does not exist",404);
         }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-
+use Spatie\QueryBuilder\QueryBuilder;
 
 class LoginController extends Controller
 {
@@ -57,7 +57,11 @@ class LoginController extends Controller
     }
     //
     public function displayUser(){
-        $users=User::where('created_at',">=", now()->subDays(30))->get();
+       # return response()->json('Users',200);
+        $users=QueryBuilder::for(User::class)
+        ->allowedSorts('id')
+        ->whereBetween('created_at', [Carbon::now()->subDays(30), Carbon::now()])
+        ->get();
         return response()->json(['Users'=>$users],200);
     }
 }

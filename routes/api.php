@@ -71,5 +71,5 @@ Route::post('/login',[LoginController::class,'Login']);
 Route::get('/getsections',[SectionController::class,'section']);
 Route::get('getservices',[ServicesController::class,'services']);
 Route::get('/getcat',[CategoryController::class,'display']);
-Route::get('/getUsers',[LoginController::class,'displayUser']);
+Route::get('/getusers',[LoginController::class,'displayUser']);
 
