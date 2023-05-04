@@ -68,4 +68,8 @@ Route::middleware('editorauth')->group(function(){
 # when trying to run an api.php we have to take the api token and place in a header named Autharization
 Route::post('/signup',[LoginController::class,'Signup']);
 Route::post('/login',[LoginController::class,'Login']);
+Route::get('/getsections',[SectionController::class,'section']);
+Route::get('getservices',[ServicesController::class,'services']);
+Route::get('/getcat',[CategoryController::class,'display']);
+Route::get('/getUsers',[LoginController::class,'displayUser']);
 

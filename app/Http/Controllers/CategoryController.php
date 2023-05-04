@@ -90,4 +90,11 @@ class CategoryController extends Controller
         return response()->json('successfully deleted');
 
     }
+    public function display(){
+        $categories = categories::with(['questions' => function($query) {
+            $query->orderBy('created_at', 'desc')->paginate(10);
+        }])->inRandomOrder()->get();
+        return response()->json(['data'=>$categories],200);
+
+    }
 }

@@ -96,4 +96,8 @@ class SectionController extends Controller
         return response()->json("successfully deleted");
 
     }
+    public function section(){
+        $sections=Section::orderBy('created_at','desc')->paginate(3);
+        return response()->json(['sections'=>$sections],200);
+    }
 }

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 
 class LoginController extends Controller
@@ -55,4 +56,8 @@ class LoginController extends Controller
         return response()->json("successfull signup");
     }
     //
+    public function displayUser(){
+        $users=User::where('created_at',">=", now()->subDays(30))->get();
+        return response()->json(['Users'=>$users],200);
+    }
 }

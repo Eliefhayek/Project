@@ -91,4 +91,8 @@ class ServiceController extends Controller
         $serv->delete();
         return response()->json('successfully deleted');
     }
+    public function services(){
+        $services=Services::orderBy('created_at','desc')->paginate(4);
+        return response()->json(['services'=>$services],200);
+    }
 }
