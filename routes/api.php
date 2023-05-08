@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\questionController;
 use App\Http\Controllers\SectionController;
@@ -72,4 +73,6 @@ Route::get('/getsections',[SectionController::class,'section']);
 Route::get('getservices',[ServicesController::class,'services']);
 Route::get('/getcat',[CategoryController::class,'display']);
 Route::get('/getusers',[LoginController::class,'displayUser']);
+
+Route::post('/files',[FileController::class,'store']);
 
