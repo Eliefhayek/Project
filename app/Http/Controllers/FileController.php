@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
@@ -17,4 +18,25 @@ class FileController extends Controller
             'path' => $path
         ]);
     }
+    public function privateStore(Request $request){
+        $validatedData = $request->validate([
+            'file' => 'required|file',
+        ]);
+        $path = $request->file('file')->store('private');
+        return response()->json([
+            'path' => $path
+        ]);
+    }
+    public function getPrivateImages()
+{
+    $files = Storage::files('private');
+
+    $images = [];
+    foreach ($files as $file) {
+        $images[] = Storage::url($file);
+    }
+
+    return response()->json($images);
+}
+
 }

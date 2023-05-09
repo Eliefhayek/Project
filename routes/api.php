@@ -75,4 +75,8 @@ Route::get('/getcat',[CategoryController::class,'display']);
 Route::get('/getusers',[LoginController::class,'displayUser']);
 
 Route::post('/files',[FileController::class,'store']);
+Route::post('/privatefiles',[FileController::class,'privateStore']);
 
+Route::middleware('validate')->group(function(){
+    Route::get('/privateImages',[FileController::class,'getPrivateImages']);
+});
