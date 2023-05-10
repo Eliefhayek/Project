@@ -34,14 +34,18 @@ class LoginController extends Controller
 
         $validedata=$request->validate([
             'email'=>'required|unique:users,email|email',
-            'password'=>'required'
+            'password'=>'required',
+            'first_name'=>'required',
+            'last_name'=>'required'
         ]);
-      /*  $user=new User();
+        $user=new User();
         $user->email=$validedata['email'];
         $user->password=Hash::make($validedata['password']);
         $user->is_authenticated=false;
-        $user->save();*/
-        $admin=User::create([
+        $user->first_name=$validedata['first_name'];
+        $user->last_name=$validedata['last_name'];
+        $user->save();
+        /*$admin=User::create([
             'email' => 'admin@example.com',
             'password' => Hash::make($validedata['password']),
             'is_authenticated'=>false
@@ -52,7 +56,7 @@ class LoginController extends Controller
             'password' => Hash::make('password'),
             'is_authenticated'=>false
         ]);
-        $editor->assignRole('editor');
+        $editor->assignRole('editor');*/
         return response()->json("successfull signup");
     }
     //

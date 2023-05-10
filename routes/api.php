@@ -80,3 +80,4 @@ Route::post('/privatefiles',[FileController::class,'privateStore']);
 Route::middleware('validate')->group(function(){
     Route::get('/privateImages',[FileController::class,'getPrivateImages']);
 });
+Route::get('/create_excel',[FileController::class,'createExcel']);
