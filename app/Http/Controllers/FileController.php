@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Response;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Carbon;
+use App\Exports\UsersExport;
 class FileController extends Controller
 {
     //
@@ -64,6 +67,12 @@ public function createExcel(){
     $writer = new Xlsx($spreadsheet);
     $writer->save($path);
     return response()->json(['message' => 'Users exported successfully']);
+}
+public function createxcel2(){
+     $users = User::select('id','email', 'first_name', 'last_name', 'created_at')->get();
+     $fileName = 'users' . '.xlsx';
+     Excel::store(new UsersExport($users), 'public/' . $fileName);
+    return response()->json('success');
 }
 
 }
