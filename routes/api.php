@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\questionController;
@@ -82,3 +83,6 @@ Route::middleware('validate')->group(function(){
 });
 //Route::get('/create_excel',[FileController::class,'createExcel']);
 Route::get('/create_excel',[FileController::class,'createxcel2']);
+Route::post('/resizeImage',[FileController::class,'resizeImage']);
+Route::post('/thumb',[FileController::class,'ThumbImage']);
+Route::post('/email',[EmailController::class,'sendEmail']);

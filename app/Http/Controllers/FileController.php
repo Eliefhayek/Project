@@ -11,6 +11,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Carbon;
 use App\Exports\UsersExport;
+use Intervention\Image\Facades\Image;
 class FileController extends Controller
 {
     //
@@ -73,6 +74,39 @@ public function createxcel2(){
      $fileName = 'users' . '.xlsx';
      Excel::store(new UsersExport($users), 'public/' . $fileName);
     return response()->json('success');
+}
+public function resizeImage(Request $request){
+    $validedata=$request->validate([
+        'width'=>'required',
+        'height'=>'required',
+        'imagename'=>'required'
+
+    ]);
+    $width=$validedata['width'];
+    $height=$validedata['height'];
+    $name=$validedata['imagename'];
+    $image = Image::make(storage_path('app/private/'.$name.'.jpg'));
+    $image->resize($width, $height, function ($constraint) {
+    $constraint->aspectRatio();
+});
+$image->save(storage_path('app/public/my_image.jpg'));
+return response()->json('successfull');
+}
+public function ThumbImage(Request $request){
+    $validedata=$request->validate([
+        'imagename'=>'required'
+    ]);
+    $name=$validedata['imagename'];
+    $image = Image::make(storage_path('app/private/'.$name.'.jpg'));
+    $image->resize(100, null, function ($constraint) {
+        $constraint->aspectRatio();
+    });
+
+    $image->resize(null, 100, function ($constraint) {
+        $constraint->aspectRatio();
+    });
+$image->save(storage_path('app/public/thumb.jpg'));
+return response()->json('successfull');
 }
 
 }
